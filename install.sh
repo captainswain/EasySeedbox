@@ -9,6 +9,7 @@ if [ $(id -u) != "0" ]; then
 fi
 
 clear
+
 echo "
 ____ ____ ____ _   _    ____ ____ ____ ___  ___  ____ _  _
 |___ |__| [__   \_/     [__  |___ |___ |  \ |__] |  |  \/
@@ -21,6 +22,13 @@ echo "Description:"
 echo " Installs seed box for you. Transmission"
 echo "Script written by swain. - swain.pw"
 echo "========================================================================="
+
+// Try and find ip, if not available pull from network.
+IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+if [[ "$IP" = "" ]]; then
+        IP=$(wget -qO- ipv4.icanhazip.com)
+fi
+
 cur_dir=$(pwd)
 
 
@@ -114,7 +122,6 @@ echo "Install Complete!"
 echo "========================================================================="
 echo "                   Seedbox Installed successfully! "
 echo "========================================================================="
-IP=`http://swain.pw/scripts/ip.php`
 echo " WebUI URL: http://$IP:9091"
 echo " WebUI Username: $username"
 echo " WebUI Password: $pass"
