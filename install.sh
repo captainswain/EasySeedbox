@@ -111,10 +111,10 @@ fi
 cd $cur_dir
 echo "============================Updating Config============================"
 
-rm -f /etc/transmission-daemon/settings.json
+# rm -f /etc/transmission-daemon/settings.json
 
 
-# mv -i seedboxconfig.txt /etc/transmission-daemon/settings.json
+mv -i seedboxconfig.txt /etc/transmission-daemon/settings.json
 
 sed -i 's/user/'$username'/g' /etc/transmission-daemon/settings.json
 sed -i 's/password/'$pass'/g' /etc/transmission-daemon/settings.json
