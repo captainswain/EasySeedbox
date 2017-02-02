@@ -24,7 +24,7 @@ echo " Ubuntu or Debian VPS."
 echo "Script written by swain. - swain.pw"
 echo "========================================================================="
 
-// Try and find ip, if not available pull from network.
+# Try and find ip, if not available pull from network.
 IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 if [[ "$IP" = "" ]]; then
         IP=$(wget -qO- ipv4.icanhazip.com)
@@ -113,7 +113,10 @@ cd $cur_dir
 echo "============================Updating Config============================"
 
 rm -f /etc/transmission-daemon/settings.json
-mv -i seedboxconfig.txt /etc/transmission-daemon/settings.json
+
+
+# mv -i seedboxconfig.txt /etc/transmission-daemon/settings.json
+
 sed -i 's/user/'$username'/g' /etc/transmission-daemon/settings.json
 sed -i 's/password/'$pass'/g' /etc/transmission-daemon/settings.json
 echo "============================Restarting Transmission====================="
