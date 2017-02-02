@@ -9,4 +9,5 @@ A simple script to get a basic seedbox up and running in minutes.
 
 
 ## How to install
-```wget https://raw.githubusercontent.com/captainswain/Transmission-EasySeedbox/master/install.sh -O - | sh```
+
+```wget https://raw.githubusercontent.com/captainswain/Transmission-EasySeedbox/master/install.sh -O transmission-install.sh && sh transmission-install.sh```
