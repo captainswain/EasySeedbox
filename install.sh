@@ -76,7 +76,7 @@ echo "============================Starting Install==============================
 apt-get -y  update
 apt-get -y install transmission-daemon curl
 
-echo "============================making directorys=================================="
+echo "============================making directories================================"
 if [ ! -d "/home/downloads" ]; then
     mkdir /home/downloads
 echo "/home/downloads  [created]"
@@ -105,20 +105,12 @@ echo "/home/downloads/downloaded [created]"
 else
 echo "/home/downloads/downloaded [found]"
 fi
-echo "============================Permissions=================================="
+echo "============================Permissions======================================="
 usermod -a -G debian-transmission root
 chgrp -R debian-transmission /home/downloads
 chmod -R 770 /home/downloads
-# echo "============================Downloading Config============================"
-# if [ -s seedboxconfig.txt ]; then
-#   echo " Seedbox config [found]"
-#   else
-#   echo "Downloading Seedbox Config......"
-#   wget -c http://dl.dropbox.com/u/22145210/seedboxconfig.txt
-# fi
-
 cd $cur_dir
-echo "============================Updating Config============================"
+echo "============================Updating Config==================================="
 
 # rm -f /etc/transmission-daemon/settings.json
 truncate -s0 $SETTINGSFILE
@@ -259,10 +251,9 @@ EOM
 
 sed -i 's/uzr/'$username'/g' /etc/transmission-daemon/settings.json
 sed -i 's/pzw/'$pass'/g' /etc/transmission-daemon/settings.json
-echo "============================Restarting Transmission====================="
-
+echo "============================Restarting Transmission==========================="
 service transmission-daemon reload
-echo "Install Complete!"
+clear
 echo "========================================================================="
 echo "                   Seedbox Installed successfully! "
 echo "========================================================================="

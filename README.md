@@ -2,8 +2,11 @@
 A simple script to get a basic seedbox up and running in minutes.
 
 
-##Image:
+
+##Images:
 ![alt text](https://i.imgur.com/nAMqnxc.png)
+![alt text](https://i.imgur.com/2wEfmuI.png)
+
 
 ## How to install
 ```wget https://raw.githubusercontent.com/captainswain/Transmission-EasySeedbox/master/install.sh -O - | sh```
