@@ -24,11 +24,20 @@ echo " Ubuntu or Debian VPS."
 echo "Script written by swain. - swain.pw"
 echo "========================================================================="
 
+
+#--------------------------
+# Good Vars
+#--------------------------
+
 # Try and find ip, if not available pull from network.
 IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 if [[ "$IP" = "" ]]; then
         IP=$(wget -qO- ipv4.icanhazip.com)
 fi
+
+#Set settings file config.
+SETTINGSFILE="/etc/transmission-daemon/settings.json"
+
 
 cur_dir=$(pwd)
 
@@ -100,21 +109,153 @@ echo "============================Permissions=================================="
 usermod -a -G debian-transmission root
 chgrp -R debian-transmission /home/downloads
 chmod -R 770 /home/downloads
-echo "============================Downloading Config============================"
-if [ -s seedboxconfig.txt ]; then
-  echo " Seedbox config [found]"
-  else
-  echo "Downloading Seedbox Config......"
-  wget -c http://dl.dropbox.com/u/22145210/seedboxconfig.txt
-fi
+# echo "============================Downloading Config============================"
+# if [ -s seedboxconfig.txt ]; then
+#   echo " Seedbox config [found]"
+#   else
+#   echo "Downloading Seedbox Config......"
+#   wget -c http://dl.dropbox.com/u/22145210/seedboxconfig.txt
+# fi
 
 cd $cur_dir
 echo "============================Updating Config============================"
 
 # rm -f /etc/transmission-daemon/settings.json
+truncate -s0 $SETTINGSFILE
 
+cat > $SETTINGSFILE <<- EOM
+{
+"alt-speed-down": 50,
 
-mv -i seedboxconfig.txt /etc/transmission-daemon/settings.json
+"alt-speed-enabled": false,
+
+"alt-speed-time-begin": 540,
+
+"alt-speed-time-day": 127,
+
+"alt-speed-time-enabled": false,
+
+"alt-speed-time-end": 1020,
+
+"alt-speed-up": 50,
+
+"bind-address-ipv4": "0.0.0.0",
+
+"bind-address-ipv6": "::",
+
+"blocklist-enabled": false,
+
+"dht-enabled": true,
+
+"download-dir": "/home/downloads/downloaded/",
+
+"incomplete-dir": "/home/downloads/incomplete/",
+
+"incomplete-dir-enabled": true,
+
+"watch-dir": "/home/downloads/watch/",
+
+"watch-dir-enabled": true,
+
+"download-limit": 100,
+
+"download-limit-enabled": 0,
+
+"encryption": 2,
+
+"lazy-bitfield-enabled": true,
+
+"lpd-enabled": false,
+
+"max-peers-global": 200,
+
+"message-level": 2,
+
+"open-file-limit": 32,
+
+"peer-limit-global": 240,
+
+"peer-limit-per-torrent": 60,
+
+"peer-port": 20628,
+
+"peer-port-random-high": 20500,
+
+"peer-port-random-low": 20599,
+
+"peer-port-random-on-start": true,
+
+"peer-socket-tos": 0,
+
+"pex-enabled": true,
+
+"port-forwarding-enabled": false,
+
+"preallocation": 1,
+
+"proxy": "",
+
+"proxy-auth-enabled": false,
+
+"proxy-auth-password": "",
+
+"proxy-auth-username": "",
+
+"proxy-enabled": false,
+
+"proxy-port": 80,
+
+"proxy-type": 0,
+
+"ratio-limit": 0.2500,
+
+"ratio-limit-enabled": true,
+
+"rename-partial-files": true,
+
+"rpc-authentication-required": true,
+
+"rpc-bind-address": "0.0.0.0",
+
+"rpc-enabled": true,
+
+"rpc-username": "user",
+
+"rpc-password": "password",
+
+"rpc-port": 9091,
+
+"rpc-whitelist": "127.0.0.1,*.*.*.*",
+
+"rpc-whitelist-enabled": true,
+
+"script-torrent-done-enabled": false,
+
+"script-torrent-done-filename": "",
+
+"speed-limit-down": 100,
+
+"speed-limit-down-enabled": false,
+
+"speed-limit-up": 1,
+
+"speed-limit-up-enabled": true,
+
+"start-added-torrents": true,
+
+"trash-original-torrent-files": false,
+
+"umask": 2,
+
+"upload-limit": 100,
+
+"upload-limit-enabled": 0,
+
+"upload-slots-per-torrent": 1
+
+}
+EOM
+
 
 sed -i 's/user/'$username'/g' /etc/transmission-daemon/settings.json
 sed -i 's/password/'$pass'/g' /etc/transmission-daemon/settings.json
