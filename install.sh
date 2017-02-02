@@ -64,7 +64,6 @@ echo "============================WebUI Info=================================="
 
 
 echo "============================Starting Install=================================="
-IP=`curl -s http://swain.pw/scripts/ip.php`
 apt-get -y  update
 apt-get -y install transmission-daemon curl
 
