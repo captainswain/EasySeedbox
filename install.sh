@@ -30,7 +30,6 @@ echo "========================================================================="
 #--------------------------
 
 # Try and find ip, if not available pull from network.
-IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 if [ "$IP" = "" ]; then
         IP=$(wget -qO- ipv4.icanhazip.com)
 fi
@@ -66,7 +65,7 @@ echo "============================WebUI Info=================================="
     echo "Please input your requested WebUI password for the seedbox:"
     read -p "(Default Password:pass):" pass
     if [ "$pass" = "" ]; then
-        username="passr"
+        username="pass"
     fi
     echo "==========================="
     echo " Password = $pass"
@@ -220,9 +219,9 @@ cat > $SETTINGSFILE <<- EOM
 
 "rpc-enabled": true,
 
-"rpc-username": "user",
+"rpc-username": "uzr",
 
-"rpc-password": "password",
+"rpc-password": "pzw",
 
 "rpc-port": 9091,
 
@@ -258,8 +257,8 @@ cat > $SETTINGSFILE <<- EOM
 EOM
 
 
-sed -i 's/user/'$username'/g' /etc/transmission-daemon/settings.json
-sed -i 's/password/'$pass'/g' /etc/transmission-daemon/settings.json
+sed -i 's/uzr/'$username'/g' /etc/transmission-daemon/settings.json
+sed -i 's/pzw/'$pass'/g' /etc/transmission-daemon/settings.json
 echo "============================Restarting Transmission====================="
 
 service transmission-daemon reload
