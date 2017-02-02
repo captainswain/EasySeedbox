@@ -31,9 +31,10 @@ echo "========================================================================="
 
 # Try and find ip, if not available pull from network.
 IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
-if [[ "$IP" = "" ]]; then
+if [ "$IP" = "" ]; then
         IP=$(wget -qO- ipv4.icanhazip.com)
 fi
+
 
 #Set settings file config.
 SETTINGSFILE="/etc/transmission-daemon/settings.json"
