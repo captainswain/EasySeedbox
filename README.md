@@ -6,7 +6,7 @@ Written and tested on ubuntu 12.04+ vps's, but it should work on any other recen
 
 [![forthebadge](http://forthebadge.com/images/badges/certified-snoop-lion.svg)](http://forthebadge.com)
 
-##Images:
+## Images
 ![script](https://i.imgur.com/nAMqnxc.png)
 ![web ui](https://i.imgur.com/2wEfmuI.png)
 
