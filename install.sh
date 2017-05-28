@@ -21,15 +21,11 @@ echo "========================================================================="
 echo "Description:"
 echo " Installs Transmission and WebUI to create a simple seedbox on any"
 echo " Ubuntu or Debian VPS."
-echo "Script written by swain. - swain.pw"
+echo "Script written by swain."
 echo "========================================================================="
 
 
-#--------------------------
-# Good Vars
-#--------------------------
-
-# Try and find ip, if not available pull from network.
+# Pull IP Address 
 if [ "$IP" = "" ]; then
         IP=$(wget -qO- ipv4.icanhazip.com)
 fi
@@ -51,7 +47,7 @@ cur_dir=$(pwd)
     if [ "$accepted" = "n" ]; then
         exit
     fi
-echo "============================WebUI Info=================================="
+echo "===============================WebUI Info====================================="
     username="user"
     echo "Please input your requested WebUI username for the seedbox:"
     read -p "(Default user:user):" username
@@ -254,14 +250,14 @@ sed -i 's/pzw/'$pass'/g' /etc/transmission-daemon/settings.json
 echo "============================Restarting Transmission==========================="
 service transmission-daemon reload
 clear
-echo "========================================================================="
+echo "=============================================================================="
 echo "                   Seedbox Installed successfully! "
-echo "========================================================================="
+echo "=============================================================================="
 echo " WebUI URL: http://$IP:9091"
 echo " WebUI Username: $username"
 echo " WebUI Password: $pass"
 echo " Download Location: /home/downloads"
 echo ""
-echo "========================================================================="
-echo "                            Script by swain.pw                           "
-echo "========================================================================="
+echo "=============================================================================="
+echo "                            Script by swain.pw                                "
+echo "=============================================================================="
