@@ -2,70 +2,88 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
+
+#################################################################################
+#Script Console Colors - Thanks quickbox !
+black=$(tput setaf 0); red=$(tput setaf 1); green=$(tput setaf 2); yellow=$(tput setaf 3);
+blue=$(tput setaf 4); magenta=$(tput setaf 5); cyan=$(tput setaf 6); white=$(tput setaf 7);
+bold=$(tput bold);dim=$(tput dim); underline=$(tput smul);reset_underline=$(tput rmul);
+standout=$(tput smso); reset_standout=$(tput rmso); normal=$(tput sgr0);
+#################################################################################
+
 # Check if user is root
 if [ $(id -u) != "0" ]; then
-    echo "Error: You must be root to run this script, please use root to install your seed box"
+    echo "${red}Error: ${normal}You must be root to run this script, please use root to install."
     exit 1
 fi
 
 clear
 
-echo "
-____ ____ ____ _   _    ____ ____ ____ ___  ___  ____ _  _
-|___ |__| [__   \_/     [__  |___ |___ |  \ |__] |  |  \/
-|___ |  | ___]   |      ___] |___ |___ |__/ |__] |__| _/\_ "
+echo "${cyan}"
+cat << "EOF"
+  _____                  ____                _ _               
+ | ____|__ _ ___ _   _  / ___|  ___  ___  __| | |__   _____  __
+ |  _| / _` / __| | | | \___ \ / _ \/ _ \/ _` | '_ \ / _ \ \/ /
+ | |__| (_| \__ \ |_| |  ___) |  __/  __/ (_| | |_) | (_) >  < 
+ |_____\__,_|___/\__, | |____/ \___|\___|\__,_|_.__/ \___/_/\_\
+                 |___/                                         
+ 
+EOF
 
+echo "${normal}========================================================================="
+echo "${cyan}Easy Seedbox installer - Transmission${normal}"
 echo "========================================================================="
-echo "Easy Seedbox installer - Transmission"
-echo "========================================================================="
-echo "Description:"
+echo "${bold}Description:${normal}"
 echo " Installs Transmission and WebUI to create a simple seedbox on any"
 echo " Ubuntu or Debian VPS."
-echo "Script written by swain."
+echo "\n${dim}Script written by ${bold}swain.${normal}"
 echo "========================================================================="
 
 
-# Pull IP Address 
+# Pull IP Address
 if [ "$IP" = "" ]; then
-        IP=$(wget -qO- ipv4.icanhazip.com)
+    IP=$(wget -qO- ipv4.icanhazip.com)
 fi
 
 
-#Set settings file config.
+#Set var for settingsfile.
 SETTINGSFILE="/etc/transmission-daemon/settings.json"
 
 
 cur_dir=$(pwd)
 
 
-    accepted="N"
-    echo "Do you want to install the seed box?:"
-    read -p "(Y/N):" accepted
-    if [ "$accepted" = "N" ]; then
-        exit
-    fi
-    if [ "$accepted" = "n" ]; then
-        exit
-    fi
+accepted="N"
+echo "Would you like to install Transmission?:"
+
+#read user input
+read -p "(${green}Y${normal}/${red}N${normal}):" accepted
+
+#simple way to do toupper()
+accepted=$(echo "${accepted}" | tr '[:lower:]' '[:upper:]')
+
+if [ "$accepted" = "N" ]; then
+    exit
+fi
 echo "===============================WebUI Info====================================="
+username="user"
+echo "Please input your requested WebUI username for the seedbox:"
+read -p "(Default user:user):" username
+if [ "$username" = "" ]; then
     username="user"
-    echo "Please input your requested WebUI username for the seedbox:"
-    read -p "(Default user:user):" username
-    if [ "$username" = "" ]; then
-        username="user"
-    fi
-    echo "==========================="
-    echo " Username = $username"
-    echo "==========================="
-    pass="pass"
-    echo "Please input your requested WebUI password for the seedbox:"
-    read -p "(Default Password:pass):" pass
-    if [ "$pass" = "" ]; then
-        username="pass"
-    fi
-    echo "==========================="
-    echo " Password = $pass"
-    echo "==========================="
+fi
+echo "==========================="
+echo " Username = $username"
+echo "==========================="
+pass="pass"
+echo "Please input your requested WebUI password for the seedbox:"
+read -p "(Default Password:pass):" pass
+if [ "$pass" = "" ]; then
+    username="pass"
+fi
+echo "==========================="
+echo " Password = $pass"
+echo "==========================="
 
 
 echo "============================Starting Install=================================="
@@ -75,31 +93,31 @@ apt-get -y install transmission-daemon curl
 echo "============================making directories================================"
 if [ ! -d "/home/downloads" ]; then
     mkdir /home/downloads
-echo "/home/downloads  [created]"
+    echo "/home/downloads  [created]"
 else
-echo "/home/downloads [found]"
+    echo "/home/downloads [found]"
 fi
 # 2nd if
 if [ ! -d "/home/downloads/watch" ]; then
-  mkdir /home/downloads/watch
-echo "/home/downloads/watch [created]"
+    mkdir /home/downloads/watch
+    echo "/home/downloads/watch [created]"
 else
-echo "/home/downloads/watch [found]"
-
-#3rd if
+    echo "/home/downloads/watch [found]"
+    
+    #3rd if
 fi
 if [ ! -d "/home/downloads/incomplete" ]; then
-   mkdir /home/downloads/incomplete
-echo "/home/downloads/incomplete [created]"
-
+    mkdir /home/downloads/incomplete
+    echo "/home/downloads/incomplete [created]"
+    
 else
-echo "/home/downloads/incomplete [found]"
+    echo "/home/downloads/incomplete [found]"
 fi
 if [ ! -d "/home/downloads/downloaded" ]; then
-  mkdir /home/downloads/downloaded
-echo "/home/downloads/downloaded [created]"
+    mkdir /home/downloads/downloaded
+    echo "/home/downloads/downloaded [created]"
 else
-echo "/home/downloads/downloaded [found]"
+    echo "/home/downloads/downloaded [found]"
 fi
 echo "============================Permissions======================================="
 usermod -a -G debian-transmission root
@@ -108,7 +126,6 @@ chmod -R 770 /home/downloads
 cd $cur_dir
 echo "============================Updating Config==================================="
 
-# rm -f /etc/transmission-daemon/settings.json
 truncate -s0 $SETTINGSFILE
 
 cat > $SETTINGSFILE <<- EOM
