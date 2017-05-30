@@ -11,6 +11,18 @@ bold=$(tput bold);dim=$(tput dim); underline=$(tput smul);reset_underline=$(tput
 standout=$(tput smso); reset_standout=$(tput rmso); normal=$(tput sgr0);
 #################################################################################
 
+#################################################################################
+# Helper Functions
+
+# https://ubuntuforums.org/showthread.php?t=2028113
+center()
+{
+  w=$(stty size | cut -d" " -f2)       # width of the terminal
+  l=${#1}                              # length of the string
+  printf "%"$((l+(w-l)/2))"s\n" "$1"   # print string padded to proper width (%Ws)
+}
+#################################################################################
+
 # Check if user is root
 if [ $(id -u) != "0" ]; then
     echo "${red}Error: ${normal}You must be root to run this script, please use root to install."
@@ -19,24 +31,30 @@ fi
 
 clear
 
-echo "${cyan}"
-cat << "EOF"
-  _____                  ____                _ _               
- | ____|__ _ ___ _   _  / ___|  ___  ___  __| | |__   _____  __
- |  _| / _` / __| | | | \___ \ / _ \/ _ \/ _` | '_ \ / _ \ \/ /
- | |__| (_| \__ \ |_| |  ___) |  __/  __/ (_| | |_) | (_) >  < 
- |_____\__,_|___/\__, | |____/ \___|\___|\__,_|_.__/ \___/_/\_\
-                 |___/                                         
+# echo "${cyan}"
+# cat << "EOF"
+#   _____                  ____                _ _               
+#  | ____|__ _ ___ _   _  / ___|  ___  ___  __| | |__   _____  __
+#  |  _| / _` / __| | | | \___ \ / _ \/ _ \/ _` | '_ \ / _ \ \/ /
+#  | |__| (_| \__ \ |_| |  ___) |  __/  __/ (_| | |_) | (_) >  < 
+#  |_____\__,_|___/\__, | |____/ \___|\___|\__,_|_.__/ \___/_/\_\
+#                  |___/                                         
  
-EOF
+# EOF
 
 echo "${normal}========================================================================="
-echo "${cyan}Easy Seedbox installer - Transmission${normal}"
+center "${cyan}Easy Seedbox installer - Transmission${normal}"
 echo "========================================================================="
 echo "${bold}Description:${normal}"
 echo " Installs Transmission and WebUI to create a simple seedbox on any"
-echo " Ubuntu or Debian VPS."
-echo "\n${dim}Script written by ${bold}swain.${normal}"
+echo " Ubuntu or Debian VPS. \n"
+echo "${bold}Installation Options: ${normal}"
+echo "${bold}1)${normal} Basic installation - Just transmission and webpanel (no-SSL) \n"
+echo "${bold}2)${normal} Secure installation ${green}(recommended)${normal} - Transmission with SSL, "
+echo "   Bruteforce protection, nginx webserver, and easy download folder.\n"
+echo "${bold}3)${normal} Update seedbox Login credentials. \n"
+echo "${bold}4)${normal} ${red}Exit${normal}"
+# echo "\n${dim}Script written by ${bold}swain.${normal}"
 echo "========================================================================="
 
 
@@ -54,10 +72,10 @@ cur_dir=$(pwd)
 
 
 accepted="N"
-echo "Would you like to install Transmission?:"
+echo "Please choose an installation option:"
 
 #read user input
-read -p "(${green}Y${normal}/${red}N${normal}):" accepted
+read -p "(1/${green}2${normal}/3/${red}4${normal}):" accepted
 
 #simple way to do toupper()
 accepted=$(echo "${accepted}" | tr '[:lower:]' '[:upper:]')
@@ -268,7 +286,7 @@ echo "============================Restarting Transmission=======================
 service transmission-daemon reload
 clear
 echo "=============================================================================="
-echo "                   Seedbox Installed successfully! "
+center "Seedbox Installed successfully!"
 echo "=============================================================================="
 echo " WebUI URL: http://$IP:9091"
 echo " WebUI Username: $username"
@@ -276,5 +294,5 @@ echo " WebUI Password: $pass"
 echo " Download Location: /home/downloads"
 echo ""
 echo "=============================================================================="
-echo "                            Script by swain.pw                                "
+center "Script by swain.pw"
 echo "=============================================================================="
