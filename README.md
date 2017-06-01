@@ -4,13 +4,18 @@
 EasySeedbox is an unobtrusive seedbox installation script for Ubuntu and Debian systems.
 
 
-Written and tested on ubuntu 12.04+ vps's, but it should work on any other recent debian/ubuntu install.
 
-<p align="center"><img src="http://forthebadge.com/images/badges/certified-snoop-lion.svg"></p>
+
+#### Supported Operating Systems
+- Ubuntu 12.04+
+- Debian 7+
+
+
+<p align="center"><img src="http://forthebadge.com/images/badges/certified-snoop-lion.svg">  <img src="http://forthebadge.com/images/badges/built-with-love.svg"></p>
 
 ## Images
 <p align="center"><img src="https://i.imgur.com/Tq5oOH8.png"></p>
-<p align="center"><img width="800"src="https://i.imgur.com/2wEfmuI.png"></p>
+<p align="center"><img src="https://i.imgur.com/MfX2i64.png"></p>
 
 ## Todo
 - [ ] Implement optional server hardening
