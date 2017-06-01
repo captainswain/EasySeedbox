@@ -1,14 +1,16 @@
-# Ubuntu Transmission Seedbox Install script
-Unobtrusive seedbox installation script for Ubuntu and Debian systems
+<p align="center"><img width="500"src="https://i.imgur.com/xlZ9EfB.png"></p>
+
+## What is EasySeedbox?
+EasySeedbox is an unobtrusive seedbox installation script for Ubuntu and Debian systems.
 
 
 Written and tested on ubuntu 12.04+ vps's, but it should work on any other recent debian/ubuntu install.
 
-[![forthebadge](http://forthebadge.com/images/badges/certified-snoop-lion.svg)](http://forthebadge.com)
+<p align="center"><img src="http://forthebadge.com/images/badges/certified-snoop-lion.svg"></p>
 
 ## Images
-![script](https://i.imgur.com/Tq5oOH8.png)
-![web ui](https://i.imgur.com/2wEfmuI.png)
+<p align="center"><img src="https://i.imgur.com/Tq5oOH8.png"></p>
+<p align="center"><img width="800"src="https://i.imgur.com/2wEfmuI.png"></p>
 
 ## Todo
 - [ ] Implement optional server hardening
